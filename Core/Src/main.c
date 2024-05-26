@@ -18,12 +18,12 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "usart.h"
 #include "gpio.h"
-#include "dma.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,8 +88,8 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART1_UART_Init();
   MX_DMA_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -97,11 +97,12 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  //uint8_t TxData[10] = "01234abcde";
+  char TxData[] = "ABCADADADDADAD1213ADSADADADvcDADADvxvADSADADgdg5gljkdk;  \r\nhgsuirgfiuwgrfajyfdgayujdfajydfaudfaudfyauydfyafdyaiudgaiodgaiodaidg\n\r";
   while (1)
   {
     /* USER CODE END WHILE */
-
+    HAL_UART_Transmit_DMA(&huart1,(uint8_t*)TxData,strlen(TxData));
+    HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

@@ -87,35 +87,54 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 
     /* USART1 DMA Init */
     /* USART1_TX Init */
+    //UART 发送硬件初始化
+    //设置DMA1通道4
     hdma_usart1_tx.Instance = DMA1_Channel4;
+    //方向是从内存到外设
     hdma_usart1_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    //不自增外设地址
     hdma_usart1_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+    //自增内存地址
     hdma_usart1_tx.Init.MemInc = DMA_MINC_ENABLE;
+    //设置外设数据宽度为字节
     hdma_usart1_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    //设置内存数据宽度为字节
     hdma_usart1_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    //设置DMA模式为正常模式
     hdma_usart1_tx.Init.Mode = DMA_NORMAL;
+    //DMA的优先级为低
     hdma_usart1_tx.Init.Priority = DMA_PRIORITY_LOW;
     if (HAL_DMA_Init(&hdma_usart1_tx) != HAL_OK)
     {
       Error_Handler();
     }
 
+    //将UART和DMA链接在一起，需要串口、DMA初始化句柄、DMA的句柄
     __HAL_LINKDMA(uartHandle,hdmatx,hdma_usart1_tx);
 
     /* USART1_RX Init */
+    //设置DMA1通道5
     hdma_usart1_rx.Instance = DMA1_Channel5;
+    //DMA方向是外设到内存
     hdma_usart1_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    //禁止外设地址自增
     hdma_usart1_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+    //开启内存地址自增
     hdma_usart1_rx.Init.MemInc = DMA_MINC_ENABLE;
+    //外设的数据格式是字节
     hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    //内存的数据格式是字节
     hdma_usart1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    //DMA发送的模式正常
     hdma_usart1_rx.Init.Mode = DMA_NORMAL;
+    //DMA优先级低等级
     hdma_usart1_rx.Init.Priority = DMA_PRIORITY_LOW;
     if (HAL_DMA_Init(&hdma_usart1_rx) != HAL_OK)
     {
       Error_Handler();
     }
 
+    //将UART和DMA链接在一起，需要串口、DMA的句柄，
     __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart1_rx);
 
     /* USART1 interrupt Init */
