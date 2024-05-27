@@ -751,7 +751,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
         tickstart = HAL_GetTick();
 
       
-        //RCC->CR bit25
+        //RCC->CR bit25 等待PLL稳定
         /* Wait till PLL is disabled */
         while (__HAL_RCC_GET_FLAG(RCC_FLAG_PLLRDY)  != RESET)
         {
@@ -777,12 +777,12 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
 #endif /* RCC_CFGR2_PREDIV1SRC */
 
           /* Set PREDIV1 Value */
-          //配置HSE预分频
+          //配置HSE分频参数
           //RCC-CFGR bit17
           __HAL_RCC_HSE_PREDIV_CONFIG(RCC_OscInitStruct->HSEPredivValue);
         }
         
-        //配置PLL来源和倍频
+        //配置PLL来源和PLL倍频数
         //RCC-CFGR bit16 、 bit21:18
         /* Configure the main PLL clock source and multiplication factors. */
         __HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource,
@@ -822,8 +822,10 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
         }
       }
     }
+    //PLL已经被当作系统时钟源
     else
     { 
+      //关闭PLL时钟
       /* Check if there is a request to disable the PLL used as System clock source */
       if ((RCC_OscInitStruct->PLL.PLLState) == RCC_PLL_OFF)
       {
@@ -831,6 +833,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
       }
       else
       {
+        //其他配置
         /* Do not return HAL_ERROR if request repeats the current configuration */
         pll_config = RCC->CFGR;
         if ((READ_BIT(pll_config, RCC_CFGR_PLLSRC) != RCC_OscInitStruct->PLL.PLLSource) ||
