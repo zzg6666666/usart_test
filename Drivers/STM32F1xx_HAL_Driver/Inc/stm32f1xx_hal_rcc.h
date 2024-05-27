@@ -803,17 +803,22 @@ typedef struct
 #define __HAL_RCC_LSE_CONFIG(__STATE__)                                     \
                     do{                                                     \
                       if ((__STATE__) == RCC_LSE_ON)                        \
-                      {                                                     \
+                      {                                                   \
+                        /*打开LSE时钟*/                                         \
                         SET_BIT(RCC->BDCR, RCC_BDCR_LSEON);                   \
                       }                                                     \
                       else if ((__STATE__) == RCC_LSE_OFF)                  \
-                      {                                                     \
+                      {                              \
+                         /*关闭LSE时钟*/                                       \
                         CLEAR_BIT(RCC->BDCR, RCC_BDCR_LSEON);                 \
+                        /*关闭LSE旁路*/                                         \
                         CLEAR_BIT(RCC->BDCR, RCC_BDCR_LSEBYP);                \
                       }                                                     \
                       else if ((__STATE__) == RCC_LSE_BYPASS)               \
                       {                                                     \
+                         /*打开LSE时钟*/                                       \                                                   
                         SET_BIT(RCC->BDCR, RCC_BDCR_LSEBYP);                  \
+                        /*打开LSE旁路*/                                         \
                         SET_BIT(RCC->BDCR, RCC_BDCR_LSEON);                   \
                       }                                                     \
                       else                                                  \
