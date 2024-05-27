@@ -79,6 +79,7 @@ int main(void)
   /* USER CODE END Init */
 
   /* Configure the system clock */
+  // 配置system clock pll HCLK PCLK1 PCK2
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
@@ -88,7 +89,9 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  //初始化DMA
   MX_DMA_Init();
+  // 初始化串口
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 

@@ -40,13 +40,21 @@ void MX_USART1_UART_Init(void)
   /* USER CODE BEGIN USART1_Init 1 */
 
   /* USER CODE END USART1_Init 1 */
+  //使能USART1
   huart1.Instance = USART1;
+  //波特率
   huart1.Init.BaudRate = 115200;
+  //8字节的字长
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  //一位的停止位
   huart1.Init.StopBits = UART_STOPBITS_1;
+  //无奇偶校验
   huart1.Init.Parity = UART_PARITY_NONE;
+  //使能TX 、RX
   huart1.Init.Mode = UART_MODE_TX_RX;
+  //不使用硬件控制流
   huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  //过采样，仅仅在F100xx生效
   huart1.Init.OverSampling = UART_OVERSAMPLING_16;
   if (HAL_UART_Init(&huart1) != HAL_OK)
   {
@@ -58,6 +66,7 @@ void MX_USART1_UART_Init(void)
 
 }
 
+//初始化串口硬件
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
 
@@ -68,15 +77,20 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 
   /* USER CODE END USART1_MspInit 0 */
     /* USART1 clock enable */
+    //使能USART1，RCC->APB2ENR bit14
     __HAL_RCC_USART1_CLK_ENABLE();
 
+    //使能GPIOA，未映射
     __HAL_RCC_GPIOA_CLK_ENABLE();
     /**USART1 GPIO Configuration
     PA9     ------> USART1_TX
     PA10     ------> USART1_RX
     */
+   //配置 PA9
     GPIO_InitStruct.Pin = GPIO_PIN_9;
+    //复用推挽输出
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    //高速度
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -138,7 +152,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart1_rx);
 
     /* USART1 interrupt Init */
+    //设置USART串口中断优先级
     HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+    //使能串口中断
     HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USER CODE BEGIN USART1_MspInit 1 */
 
