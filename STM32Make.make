@@ -64,6 +64,7 @@ CPP_SOURCES = \
 
 # ASM sources
 ASM_SOURCES =  \
+Core/Src/registerTest.s \
 startup_stm32f103xb.s
 
 

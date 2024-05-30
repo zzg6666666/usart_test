@@ -50,7 +50,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+extern void regesiterTest()  __attribute__((optimize("O0")));
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -94,7 +94,7 @@ int main(void)
   // 初始化串口
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  regesiterTest();
   /* USER CODE END 2 */
 
   /* Infinite loop */

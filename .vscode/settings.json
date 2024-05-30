@@ -61,7 +61,8 @@
   "files.associations": {
     "gpio.h": "c",
     "stm32f103xb.h": "c",
-    "stm32f1xx_hal_flash_ex.h": "c"
+    "stm32f1xx_hal_flash_ex.h": "c",
+    "*.s": "c"
   },
-  "cortex-debug.variableUseNaturalFormat": true
+  "cortex-debug.variableUseNaturalFormat": false
 }
